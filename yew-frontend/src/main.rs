@@ -6,7 +6,7 @@ use components::sidebar::Sidebar;
 use pages::dashboard::Dashboard;
 
 #[derive(Routable, PartialEq, Clone)]
-enum Route {
+pub enum Route {
     #[at("/")]
     Home,
     #[at("/dashboard")]
@@ -47,6 +47,14 @@ fn switch(routes: &Route) -> Html {
 
 #[function_component(App)]
 fn app() -> Html {
+    let current_route = use_state(|| Route::Home);
+    let on_route_change = {
+        let route = current_route.clone();
+        Callback::from(move |route: Route| {
+            current_route.set(route);
+        })
+    };
+
     html! {
         <BrowserRouter>
             <div class="container">
