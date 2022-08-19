@@ -49,18 +49,10 @@ fn switch(routes: &Route) -> Html {
 
 #[function_component(App)]
 fn app() -> Html {
-    let current_route = use_state(|| Route::Dashboard);
-    let change_route = {
-        // let route = current_route.clone();
-        Callback::from(move |route: Route| {
-            current_route.set(route);
-        })
-    };
-
     html! {
         <BrowserRouter>
             <div class="container">
-                <Sidebar on_click={change_route} />
+                <Sidebar />
                 <Switch<Route> render={Switch::render(switch)} />
             </div>
         </BrowserRouter>

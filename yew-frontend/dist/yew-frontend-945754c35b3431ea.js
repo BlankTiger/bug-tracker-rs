@@ -408,6 +408,9 @@ function getImports() {
         const ret = getObject(arg0).querySelector(getStringFromWasm0(arg1, arg2));
         return isLikeNone(ret) ? 0 : addHeapObject(ret);
     }, arguments) };
+    imports.wbg.__wbg_pushState_65b5fb0f30ca9d61 = function() { return handleError(function (arg0, arg1, arg2, arg3, arg4, arg5) {
+        getObject(arg0).pushState(getObject(arg1), getStringFromWasm0(arg2, arg3), arg4 === 0 ? undefined : getStringFromWasm0(arg4, arg5));
+    }, arguments) };
     imports.wbg.__wbg_pathname_c08f1ef51f6ebba9 = function() { return handleError(function (arg0, arg1) {
         const ret = getObject(arg1).pathname;
         const ptr0 = passStringToWasm0(ret, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
@@ -483,6 +486,9 @@ function getImports() {
     imports.wbg.__wbg_cancelBubble_aa216b328c490cb1 = function(arg0) {
         const ret = getObject(arg0).cancelBubble;
         return ret;
+    };
+    imports.wbg.__wbg_preventDefault_b4d36c8196fbe491 = function(arg0) {
+        getObject(arg0).preventDefault();
     };
     imports.wbg.__wbg_href_cae04ee9562fc683 = function(arg0, arg1) {
         const ret = getObject(arg1).href;
@@ -564,12 +570,12 @@ function getImports() {
     imports.wbg.__wbindgen_throw = function(arg0, arg1) {
         throw new Error(getStringFromWasm0(arg0, arg1));
     };
-    imports.wbg.__wbindgen_closure_wrapper6167 = function(arg0, arg1, arg2) {
-        const ret = makeClosure(arg0, arg1, 405, __wbg_adapter_20);
+    imports.wbg.__wbindgen_closure_wrapper6207 = function(arg0, arg1, arg2) {
+        const ret = makeClosure(arg0, arg1, 419, __wbg_adapter_20);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper9612 = function(arg0, arg1, arg2) {
-        const ret = makeMutClosure(arg0, arg1, 419, __wbg_adapter_23);
+    imports.wbg.__wbindgen_closure_wrapper9846 = function(arg0, arg1, arg2) {
+        const ret = makeMutClosure(arg0, arg1, 433, __wbg_adapter_23);
         return addHeapObject(ret);
     };
 
@@ -605,7 +611,7 @@ function initSync(bytes) {
 
 async function init(input) {
     if (typeof input === 'undefined') {
-        input = new URL('yew-frontend-c5ca2bf0dffd6222_bg.wasm', import.meta.url);
+        input = new URL('yew-frontend-945754c35b3431ea_bg.wasm', import.meta.url);
     }
     const imports = getImports();
 
