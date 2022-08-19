@@ -25,19 +25,27 @@ pub enum Route {
 fn switch(routes: &Route) -> Html {
     match routes {
         Route::Home => html! {
+            <center>
             <h1>{ "Home" }</h1>
+            </center>
         },
         Route::Dashboard => html! {
             <Dashboard />
         },
         Route::Projects => html! {
+            <center>
             <h1>{ "Projects" }</h1>
+            </center>
         },
         Route::Issues => html! {
+            <center>
             <h1>{ "Issues" }</h1>
+            </center>
         },
         Route::UserSettings => html! {
+            <center>
             <h1>{ "User Settings" }</h1>
+            </center>
         },
         Route::NotFound => html! {
             <center>

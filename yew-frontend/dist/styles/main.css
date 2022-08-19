@@ -4,6 +4,11 @@ html, body {
 	font-family: 'Work Sans';
 }
 
+a {
+	color: #000;
+	text-decoration: none;
+}
+
 .container {
 	height: 100%;
 	display: grid;
