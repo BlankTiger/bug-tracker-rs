@@ -1,9 +1,15 @@
 use crate::components::text_button::TextButton;
 use crate::components::text_button::TextButtonProps;
+use crate::Route;
 use yew::prelude::*;
 
+#[derive(Properties, PartialEq, Clone)]
+pub struct SidebarProps {
+    pub on_click: Callback<Route>,
+}
+
 #[function_component(Sidebar)]
-pub fn sidebar() -> Html {
+pub fn sidebar(SidebarProps { on_click }: &SidebarProps) -> Html {
     let text_values: Vec<String> = vec![
         "💻 Dashboard".to_string(),
         "🗃️ Projects".to_string(),
@@ -13,12 +19,16 @@ pub fn sidebar() -> Html {
     let button_props = text_values
         .iter()
         .map(|text_value| {
-            let on_click_msg = text_value.clone().split_at(1).1.to_string();
+            let onclick = on_click.clone();
             TextButtonProps {
                 text_value: text_value.clone(),
-                on_click: Callback::from(move |_| {
-                    println!("{}", on_click_msg);
-                }),
+                on_click: Callback::from(move |_| ())
+                // on_click: Callback::from(move |_| match text_value.as_str() {
+                //     "💻 Dashboard" => onclick.emit(Route::Dashboard),
+                //     "🗃️ Projects" => onclick.emit(Route::Projects),
+                //     "📜 Issues" => onclick.emit(Route::Issues),
+                //     _ => onclick.emit(Route::NotFound),
+                // }),
             }
         })
         .collect::<Vec<TextButtonProps>>();

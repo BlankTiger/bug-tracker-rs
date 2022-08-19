@@ -7,7 +7,7 @@ use pages::dashboard::Dashboard;
 
 #[derive(Routable, PartialEq, Clone)]
 pub enum Route {
-    #[at("/")]
+    #[at("/home")]
     Home,
     #[at("/dashboard")]
     Dashboard,
@@ -40,16 +40,18 @@ fn switch(routes: &Route) -> Html {
             <h1>{ "User Settings" }</h1>
         },
         Route::NotFound => html! {
+            <center>
             <h1>{ "404" }</h1>
+            </center>
         },
     }
 }
 
 #[function_component(App)]
 fn app() -> Html {
-    let current_route = use_state(|| Route::Home);
-    let on_route_change = {
-        let route = current_route.clone();
+    let current_route = use_state(|| Route::Dashboard);
+    let change_route = {
+        // let route = current_route.clone();
         Callback::from(move |route: Route| {
             current_route.set(route);
         })
@@ -58,7 +60,7 @@ fn app() -> Html {
     html! {
         <BrowserRouter>
             <div class="container">
-                <Sidebar />
+                <Sidebar on_click={change_route} />
                 <Switch<Route> render={Switch::render(switch)} />
             </div>
         </BrowserRouter>

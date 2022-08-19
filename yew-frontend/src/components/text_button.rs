@@ -9,8 +9,8 @@ pub struct TextButtonProps {
 #[function_component(TextButton)]
 pub fn text_button(TextButtonProps { text_value, on_click }: &TextButtonProps) -> Html {
     html! {
-        <span class="text-button" onclick={ on_click }>
+        <div class="text-button" onclick={ on_click }>
             { text_value }
-        </span>
+        </div>
     }
 }
