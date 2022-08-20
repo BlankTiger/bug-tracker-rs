@@ -2,7 +2,7 @@ use yew::prelude::*;
 use yew_router::prelude::*;
 mod components;
 mod pages;
-use components::sidebar::Sidebar;
+use components::navbar::Navbar;
 use pages::dashboard::Dashboard;
 
 #[derive(Routable, PartialEq, Clone)]
@@ -60,7 +60,7 @@ fn app() -> Html {
     html! {
         <BrowserRouter>
             <div class="container">
-                <Sidebar />
+                <Navbar />
                 <Switch<Route> render={Switch::render(switch)} />
             </div>
         </BrowserRouter>

@@ -4,8 +4,8 @@ use crate::Route;
 use yew::prelude::*;
 use yew_router::prelude::*;
 
-#[function_component(Sidebar)]
-pub fn sidebar() -> Html {
+#[function_component(Navbar)]
+pub fn navbar() -> Html {
     let dashboard_button = {
         let props = TextButtonProps {
             text_value: "💻 Dashboard".to_string(),
@@ -51,15 +51,15 @@ pub fn sidebar() -> Html {
     };
 
     html! {
-        <nav class="sidebar">
+        <nav class="navbar">
             <div class="overflow"></div>
-            <ul>
+            <ul class="navbar-route-links">
                 { dashboard_button }
                 { projects_button }
                 { issues_button }
             </ul>
-            <div class="sidebar-divider"></div>
-            <ul>
+            <div class="navbar-divider"></div>
+            <ul class="navbar-route-links">
                 { user_settings_button }
             </ul>
         </nav>

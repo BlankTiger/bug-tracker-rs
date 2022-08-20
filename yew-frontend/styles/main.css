@@ -39,28 +39,41 @@ a {
 	margin: 2vw;
 }
 
-.sidebar {
+.navbar {
 	display: grid;
 	align-items: center;
 	grid-template-columns: auto;
 	grid-row-gap: -5vw;
+	position: fixed;
 	height: 100%;
-	padding: 0 1vw;
+	top: 0;
+	left: -100%;
+	padding-right: 3rem;
 	background-color: #212221;
+	transition: left 1s ease-in-out;
 }
 
-.sidebar-divider {
+.navbar.active {
+	left: 0;
+	transistion: left 1s ease-in-out;
+}
+
+
+.navbar-route-links {
+	list-style: none;
+}
+
+.navbar-divider {
 	height: 20vw;
 }
 
 .text-button {
-	text-align: center;
 	background: none;
 	border: none;
 	color: white;
-	font-size: 1.5em;
+	font-size: 1.4em;
 	font-weight: bold;
-	padding: 1rem 0;
+	padding: 1rem 2rem;
 	border-radius: 8px;
 }
 
