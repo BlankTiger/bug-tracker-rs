@@ -39,12 +39,12 @@ pub fn navbar() -> Html {
         }
     };
 
-    let user_settings_button = {
+    let settings_button = {
         let props = TextButtonProps {
-            text_value: "🔧 User Settings".to_string(),
+            text_value: "🔧 Settings".to_string(),
         };
         html! {
-            <Link<Route> to={Route::UserSettings}>
+            <Link<Route> to={Route::Settings}>
                 <TextButton text_value={ props.text_value } />
             </Link<Route>>
         }
@@ -60,7 +60,7 @@ pub fn navbar() -> Html {
             </ul>
             <div class="navbar-divider"></div>
             <ul class="navbar-route-links">
-                { user_settings_button }
+                { settings_button }
             </ul>
         </nav>
     }

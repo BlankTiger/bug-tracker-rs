@@ -15,8 +15,8 @@ pub enum Route {
     Projects,
     #[at("/issues")]
     Issues,
-    #[at("/user-settings")]
-    UserSettings,
+    #[at("/settings")]
+    Settings,
     #[not_found]
     #[at("/404")]
     NotFound,
@@ -42,9 +42,9 @@ fn switch(routes: &Route) -> Html {
             <h1>{ "Issues" }</h1>
             </center>
         },
-        Route::UserSettings => html! {
+        Route::Settings => html! {
             <center>
-            <h1>{ "User Settings" }</h1>
+            <h1>{ "Settings" }</h1>
             </center>
         },
         Route::NotFound => html! {

@@ -1,4 +1,4 @@
 pub mod dashboard;
 pub mod issues;
 pub mod projects;
-pub mod user_settings;
+pub mod settings;
