@@ -51,13 +51,17 @@ pub fn sidebar() -> Html {
     };
 
     html! {
-        <div class="sidebar">
+        <nav class="sidebar">
             <div class="overflow"></div>
-            { dashboard_button }
-            { projects_button }
-            { issues_button }
+            <ul>
+                { dashboard_button }
+                { projects_button }
+                { issues_button }
+            </ul>
             <div class="sidebar-divider"></div>
-            { user_settings_button }
-        </div>
+            <ul>
+                { user_settings_button }
+            </ul>
+        </nav>
     }
 }

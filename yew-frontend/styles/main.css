@@ -45,7 +45,7 @@ a {
 	grid-template-columns: auto;
 	grid-row-gap: -5vw;
 	height: 100%;
-	padding-left: 1vw;
+	padding: 0 1vw;
 	background-color: #212221;
 }
 
@@ -54,10 +54,16 @@ a {
 }
 
 .text-button {
+	text-align: center;
 	background: none;
 	border: none;
 	color: white;
 	font-size: 1.5em;
 	font-weight: bold;
-	margin-bottom: 4vw;
+	padding: 1rem 0;
+	border-radius: 8px;
+}
+
+.text-button:hover {
+	background: #333333;
 }

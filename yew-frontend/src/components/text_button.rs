@@ -8,8 +8,8 @@ pub struct TextButtonProps {
 #[function_component(TextButton)]
 pub fn text_button(TextButtonProps { text_value }: &TextButtonProps) -> Html {
     html! {
-        <div class="text-button">
+        <li class="text-button">
             { text_value }
-        </div>
+        </li>
     }
 }
