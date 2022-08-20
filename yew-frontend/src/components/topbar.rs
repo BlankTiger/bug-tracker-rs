@@ -1,5 +1,5 @@
 use yew::prelude::*;
-use crate::components::navbar_struct::NavbarMsg;
+use crate::components::navbar::NavbarMsg;
 
 #[derive(Properties, PartialEq, Clone)]
 pub struct TopbarProps {

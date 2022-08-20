@@ -3,7 +3,7 @@ use yew_router::prelude::*;
 mod components;
 mod pages;
 // use components::navbar::Navbar;
-use components::navbar_struct::Navbar;
+use components::navbar::Navbar;
 use pages::dashboard::Dashboard;
 
 #[derive(Routable, PartialEq, Eq, Clone)]
