@@ -5,7 +5,7 @@ mod pages;
 use components::navbar::Navbar;
 use pages::dashboard::Dashboard;
 
-#[derive(Routable, PartialEq, Clone)]
+#[derive(Routable, PartialEq, Eq, Clone)]
 pub enum Route {
     #[at("/home")]
     Home,
