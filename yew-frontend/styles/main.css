@@ -67,6 +67,11 @@ a {
 	height: 20vw;
 }
 
+.overflow {
+	text-align: right;
+	font-size: 2em;
+}
+
 .text-button {
 	background: none;
 	border: none;

@@ -49,10 +49,10 @@ pub fn navbar() -> Html {
             </Link<Route>>
         }
     };
-
+    // ✨
     html! {
         <nav class="navbar">
-            <div class="overflow"></div>
+            <div class="overflow">{"❌"}</div>
             <ul class="navbar-route-links">
                 { dashboard_button }
                 { projects_button }
