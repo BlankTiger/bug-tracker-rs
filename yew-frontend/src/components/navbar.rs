@@ -41,6 +41,8 @@ impl Component for Navbar {
             let props = TextButtonProps {
                 text_value: "💻 Dashboard".to_string(),
             };
+            // TODO: Push <Link<Route.. into TextButton and extract creation of buttons into
+            // separate file
             html! {
                 <Link<Route> to={Route::Dashboard}>
                     <TextButton text_value={ props.text_value } />

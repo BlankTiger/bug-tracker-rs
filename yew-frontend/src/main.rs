@@ -25,6 +25,7 @@ pub enum Route {
 
 fn switch(routes: &Route) -> Html {
     match routes {
+        // TODO: Extract out into components
         Route::Home => html! {
             <center>
             <h1>{ "Home" }</h1>
