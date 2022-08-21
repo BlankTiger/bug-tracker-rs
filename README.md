@@ -1,6 +1,19 @@
 # BugTracker.rs
 Fullstack web app written completely in rust. Yew for the frontend, actix for the backend.
 
+# Using make to interact with the program
+You have to have dotenv-rust installed, then using a posix compliant shell, you can do:
+```bash
+# run the frontend
+make serve-frontend
+
+# copy over the css files on change
+make update-css
+
+# run the backend
+make serve-backend
+```
+
 # Goals
 - [ ] Yew frontend
 	- [x] create a sidebar
