@@ -9,3 +9,4 @@ edition = "2021"
 yew = "0.19.3"
 types = { path = "../types" }
 yew-router = "0.16"
+gloo = "0.8.0"
