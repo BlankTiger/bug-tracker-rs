@@ -8,7 +8,7 @@ use pages::dashboard::Dashboard;
 
 #[derive(Routable, PartialEq, Eq, Clone)]
 pub enum Route {
-    #[at("/home")]
+    #[at("/")]
     Home,
     #[at("/dashboard")]
     Dashboard,
@@ -27,9 +27,7 @@ fn switch(routes: &Route) -> Html {
     match routes {
         // TODO: Extract out into components
         Route::Home => html! {
-            <center>
-            <h1>{ "Home" }</h1>
-            </center>
+            <Dashboard />
         },
         Route::Dashboard => html! {
             <Dashboard />
