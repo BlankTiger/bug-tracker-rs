@@ -27,9 +27,9 @@ async fn main() -> std::io::Result<()> {
 
     HttpServer::new(|| {
         App::new()
+            .service(Files::new("/", "../yew-frontend/dist").index_file("index.html"))
             .service(random)
             .service(current_path)
-            .service(Files::new("/", "../yew-frontend/dist").index_file("index.html"))
     })
     .bind_openssl(("127.0.0.1", ACTIX_PORT.parse::<u16>().unwrap_or(8080)), builder)?
     .run()
