@@ -24,6 +24,7 @@ pub async fn login(
         username: form.0.username,
         password: form.0.password,
     };
+
     match validate_credentials(credentials, &pool).await {
         Ok(user_id) => {
             session.renew();
