@@ -1,11 +1,11 @@
-use crate::auth::password::{AuthError, validate_credentials, Credentials};
+use crate::auth::password::{validate_credentials, AuthError, Credentials};
 use crate::auth::session_state::TypedSession;
 use crate::routes::error_chain::error_chain_fmt;
-use actix_web_flash_messages::FlashMessage;
 use actix_web::error::InternalError;
 use actix_web::http::header::LOCATION;
 use actix_web::web;
 use actix_web::HttpResponse;
+use actix_web_flash_messages::FlashMessage;
 use secrecy::Secret;
 use sqlx::PgPool;
 
@@ -31,7 +31,7 @@ pub async fn login(
                 .insert_user_id(user_id)
                 .map_err(|e| login_redirect(LoginError::UnexpectedError(e.into())))?;
             Ok(HttpResponse::SeeOther()
-                .insert_header((LOCATION, "/admin/dashboard"))
+                .insert_header((LOCATION, "/dashboard"))
                 .finish())
         }
         Err(e) => {

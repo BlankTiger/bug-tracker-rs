@@ -36,8 +36,11 @@ pub async fn validate_credentials(
         expected_password_hash = stored_password_hash;
     }
 
-    verify_password_hash(expected_password_hash, credentials.password)
-        .context("Failed to spawn blocking task.");
+    actix_web::rt::task::spawn_blocking(move || {
+        verify_password_hash(expected_password_hash, credentials.password)
+    })
+    .await
+    .context("Failed to spawn blocking task.")??;
 
     user_id
         .ok_or_else(|| anyhow::anyhow!("Unknown username."))

@@ -4,8 +4,8 @@ mod utils;
 use actix_files::Files;
 use actix_web::{get, web, App, HttpServer, Responder};
 use actix_web_lab::middleware::from_fn;
-use auth::manage::reject_not_authenticated;
 use auth::login::login;
+use auth::manage::reject_not_authenticated;
 use rand::prelude::*;
 use routes::login::login_form;
 
@@ -19,6 +19,7 @@ async fn random(args: web::Path<(i32, i32)>) -> impl Responder {
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     const ACTIX_PORT: &str = std::env!("ACTIX_PORT");
+
     HttpServer::new(|| {
         App::new()
             .service(
@@ -29,6 +30,9 @@ async fn main() -> std::io::Result<()> {
             )
             .route("/login", web::get().to(login_form))
             .route("/login", web::post().to(login))
+            //.route("/register", web::get().to(register_form))) 
+            //.route("/register", web::post().to(register))) 
+            //.route("/logout", web::get().to(logout))")
     })
     .bind(("127.0.0.1", ACTIX_PORT.parse::<u16>().unwrap_or(8080)))?
     .run()
