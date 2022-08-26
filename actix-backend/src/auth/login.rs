@@ -40,13 +40,14 @@ pub async fn login(
                 AuthError::InvalidCredentials(_) => LoginError::AuthError(e.into()),
                 AuthError::UnexpectedError(_) => LoginError::UnexpectedError(e.into()),
             };
+            dbg!("ay");
             Err(login_redirect(e))
         }
     }
 }
 
 fn login_redirect(e: LoginError) -> InternalError<LoginError> {
-    FlashMessage::error(e.to_string()).send();
+    // FlashMessage::error(e.to_string()).send();
     let response = HttpResponse::SeeOther()
         .insert_header((LOCATION, "/login"))
         .finish();
