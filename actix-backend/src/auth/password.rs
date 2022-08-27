@@ -29,14 +29,12 @@ pub async fn validate_credentials(
             .to_string(),
     );
 
-    dbg!("hello");
     if let Some((stored_user_id, stored_password_hash)) =
         get_stored_credentials(&credentials.username, pool).await?
     {
         user_id = Some(stored_user_id);
         expected_password_hash = stored_password_hash;
     }
-    dbg!(user_id);
 
     actix_web::rt::task::spawn_blocking(move || {
         verify_password_hash(expected_password_hash, credentials.password)
@@ -69,10 +67,9 @@ async fn get_stored_credentials(
     username: &str,
     pool: &PgPool,
 ) -> Result<Option<(uuid::Uuid, Secret<String>)>, anyhow::Error> {
-    dbg!(&username);
     let row = sqlx::query!(
         r#"
-        select user_id, password_hash from users where username = $1;
+        select user_id, password_hash from users where username = $1
         "#,
         username,
     )
@@ -80,6 +77,5 @@ async fn get_stored_credentials(
     .await
     .context("Failed to performed a query to retrieve stored credentials.")?
     .map(|row| (row.user_id, Secret::new(row.password_hash)));
-    dbg!(&row);
     Ok(row)
 }

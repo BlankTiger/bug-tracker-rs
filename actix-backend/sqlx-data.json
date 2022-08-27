@@ -1,5 +1,31 @@
 {
   "db": "PostgreSQL",
+  "163bcb2d178bc5997a02202e933af3d6ff3e9343896e4948987fdf8085e2b6af": {
+    "describe": {
+      "columns": [
+        {
+          "name": "user_id",
+          "ordinal": 0,
+          "type_info": "Uuid"
+        },
+        {
+          "name": "password_hash",
+          "ordinal": 1,
+          "type_info": "Text"
+        }
+      ],
+      "nullable": [
+        false,
+        false
+      ],
+      "parameters": {
+        "Left": [
+          "Text"
+        ]
+      }
+    },
+    "query": "\n        select user_id, password_hash from users where username = $1\n        "
+  },
   "6656cdfa51a2fecbf756daa5e95e73bff2ab5ea2bc758037851e113d341b44b5": {
     "describe": {
       "columns": [
@@ -35,31 +61,5 @@
       }
     },
     "query": "SELECT * FROM public.users"
-  },
-  "bf3a55902696e4ac2cfa87e094fb1e77f69d57a01783c785fde8c5f6e1ea883f": {
-    "describe": {
-      "columns": [
-        {
-          "name": "user_id",
-          "ordinal": 0,
-          "type_info": "Uuid"
-        },
-        {
-          "name": "password_hash",
-          "ordinal": 1,
-          "type_info": "Text"
-        }
-      ],
-      "nullable": [
-        false,
-        false
-      ],
-      "parameters": {
-        "Left": [
-          "Text"
-        ]
-      }
-    },
-    "query": "\n        select user_id, password_hash from users where username = $1;\n        "
   }
 }

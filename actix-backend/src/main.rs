@@ -8,7 +8,7 @@ use actix_files::Files;
 use actix_session::{storage::RedisSessionStore, SessionMiddleware};
 use actix_web::cookie::Key;
 use actix_web::dev::Server;
-use actix_web::{web, App, HttpResponse, HttpServer, Result};
+use actix_web::{web, App, HttpServer, Result};
 use actix_web_lab::middleware::from_fn;
 use auth::login::login;
 use auth::manage::reject_not_authenticated;
@@ -23,10 +23,6 @@ async fn single_page_app() -> Result<fs::NamedFile> {
     Ok(fs::NamedFile::open(path)?)
 }
 
-async fn test_page() -> HttpResponse {
-    HttpResponse::Ok().body("Hello world")
-}
-
 #[actix_web::main]
 async fn main() -> anyhow::Result<()> {
     let app = server().await?;
@@ -35,7 +31,6 @@ async fn main() -> anyhow::Result<()> {
 }
 
 async fn server() -> std::result::Result<Server, anyhow::Error> {
-    //TODO: add configuration with app_data
     const ACTIX_PORT: &str = std::env!("ACTIX_PORT");
 
     let redis_store = RedisSessionStore::new("redis://127.0.0.1:6379/").await?;
@@ -62,18 +57,13 @@ async fn server() -> std::result::Result<Server, anyhow::Error> {
         .acquire_timeout(std::time::Duration::from_secs(2))
         .connect_lazy_with(pg_options.database(&database_settings.database_name));
 
-    let all_users = sqlx::query!(r#"SELECT * FROM public.users"#)
-        .fetch_optional(&db_pool)
-        .await
-        .map(|row| row);
-    println!("{:#?}", all_users);
-
     let db_pool = web::Data::new(db_pool);
 
     let listener = TcpListener::bind(&format!(
         "127.0.0.1:{}",
         ACTIX_PORT.parse::<u16>().unwrap_or(8080)
     ))?;
+
     let server = HttpServer::new(move || {
         App::new()
             .wrap(SessionMiddleware::new(
@@ -86,7 +76,6 @@ async fn server() -> std::result::Result<Server, anyhow::Error> {
             .service(
                 web::scope("/dashboard")
                     .wrap(from_fn(reject_not_authenticated))
-                    .route("/test_page", web::get().to(test_page))
                     .route("/home", web::get().to(single_page_app)),
             )
             .service(Files::new("/", "../yew-frontend/dist").index_file("index.html"))

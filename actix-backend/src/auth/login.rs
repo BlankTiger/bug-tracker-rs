@@ -49,7 +49,7 @@ pub async fn login(
 fn login_redirect(e: LoginError) -> InternalError<LoginError> {
     // FlashMessage::error(e.to_string()).send();
     let response = HttpResponse::SeeOther()
-        .insert_header((LOCATION, "/dashboard/test_page"))
+        .insert_header((LOCATION, "/login"))
         .finish();
     InternalError::from_response(e, response)
 }
