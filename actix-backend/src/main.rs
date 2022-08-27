@@ -17,6 +17,7 @@ use secrecy::{ExposeSecret, Secret};
 use sqlx::postgres::{PgConnectOptions, PgPoolOptions};
 use std::net::TcpListener;
 use std::path::PathBuf;
+use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
 
 async fn single_page_app() -> Result<fs::NamedFile> {
     let path: PathBuf = PathBuf::from("../yew-frontend/dist/index.html");
@@ -25,13 +26,15 @@ async fn single_page_app() -> Result<fs::NamedFile> {
 
 #[actix_web::main]
 async fn main() -> anyhow::Result<()> {
-    let app = server().await?;
-    app.await?;
+    server().await?.await?;
     Ok(())
 }
 
 async fn server() -> std::result::Result<Server, anyhow::Error> {
     const ACTIX_PORT: &str = std::env!("ACTIX_PORT");
+    let mut builder = SslAcceptor::mozilla_intermediate(SslMethod::tls()).unwrap();
+    builder.set_private_key_file("key.pem", SslFiletype::PEM).unwrap();
+    builder.set_certificate_chain_file("cert.pem").unwrap();
 
     let redis_store = RedisSessionStore::new("redis://127.0.0.1:6379/").await?;
     let secret_value = Secret::new(vec![0; 128]);
@@ -83,7 +86,7 @@ async fn server() -> std::result::Result<Server, anyhow::Error> {
         //.route("/register", web::post().to(register)))
         //.route("/logout", web::get().to(logout))")
     })
-    .listen(listener)?
+    .listen_openssl(listener, builder)?
     .run();
     Ok(server)
 }
