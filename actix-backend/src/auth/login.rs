@@ -3,10 +3,11 @@ use crate::auth::session_state::TypedSession;
 use crate::routes::error_chain::error_chain_fmt;
 use actix_web::error::InternalError;
 use actix_web::http::header::LOCATION;
+use secrecy::Secret;
 use actix_web::web;
 use actix_web::HttpResponse;
 use actix_web_flash_messages::FlashMessage;
-use secrecy::Secret;
+use secrecy::ExposeSecret;
 use sqlx::PgPool;
 
 #[derive(serde::Deserialize)]
@@ -32,7 +33,7 @@ pub async fn login(
                 .insert_user_id(user_id)
                 .map_err(|e| login_redirect(LoginError::UnexpectedError(e.into())))?;
             Ok(HttpResponse::SeeOther()
-                .insert_header((LOCATION, "/dashboard"))
+                .insert_header((LOCATION, "/dashboard/home"))
                 .finish())
         }
         Err(e) => {
@@ -40,7 +41,6 @@ pub async fn login(
                 AuthError::InvalidCredentials(_) => LoginError::AuthError(e.into()),
                 AuthError::UnexpectedError(_) => LoginError::UnexpectedError(e.into()),
             };
-            dbg!("ay");
             Err(login_redirect(e))
         }
     }
@@ -49,7 +49,7 @@ pub async fn login(
 fn login_redirect(e: LoginError) -> InternalError<LoginError> {
     // FlashMessage::error(e.to_string()).send();
     let response = HttpResponse::SeeOther()
-        .insert_header((LOCATION, "/login"))
+        .insert_header((LOCATION, "/dashboard/test_page"))
         .finish();
     InternalError::from_response(e, response)
 }

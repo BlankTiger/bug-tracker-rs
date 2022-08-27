@@ -44,7 +44,7 @@ impl Component for Navbar {
             // TODO: Push <Link<Route.. into TextButton and extract creation of buttons into
             // separate file
             html! {
-                <Link<Route> to={Route::Dashboard}>
+                <Link<Route> to={Route::Home}>
                     <TextButton text_value={ props.text_value } />
                 </Link<Route>>
             }
