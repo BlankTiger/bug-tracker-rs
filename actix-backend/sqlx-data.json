@@ -25,41 +25,5 @@
       }
     },
     "query": "\n        select user_id, password_hash from users where username = $1\n        "
-  },
-  "6656cdfa51a2fecbf756daa5e95e73bff2ab5ea2bc758037851e113d341b44b5": {
-    "describe": {
-      "columns": [
-        {
-          "name": "user_id",
-          "ordinal": 0,
-          "type_info": "Uuid"
-        },
-        {
-          "name": "email",
-          "ordinal": 1,
-          "type_info": "Text"
-        },
-        {
-          "name": "username",
-          "ordinal": 2,
-          "type_info": "Text"
-        },
-        {
-          "name": "password_hash",
-          "ordinal": 3,
-          "type_info": "Text"
-        }
-      ],
-      "nullable": [
-        false,
-        false,
-        false,
-        false
-      ],
-      "parameters": {
-        "Left": []
-      }
-    },
-    "query": "SELECT * FROM public.users"
   }
 }

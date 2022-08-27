@@ -46,7 +46,7 @@ async fn server() -> std::result::Result<Server, anyhow::Error> {
         username: "postgres".to_string(),
         password: Secret::from("postgres".to_string()),
         database_name: "users".to_string(),
-        require_ssl: false,
+        require_ssl: true,
     };
 
     let pg_options = PgConnectOptions::new()
@@ -54,7 +54,7 @@ async fn server() -> std::result::Result<Server, anyhow::Error> {
         .port(database_settings.port)
         .username(&database_settings.username)
         .password(database_settings.password.expose_secret())
-        .ssl_mode(sqlx::postgres::PgSslMode::Disable);
+        .ssl_mode(sqlx::postgres::PgSslMode::Require);
 
     let db_pool = PgPoolOptions::new()
         .acquire_timeout(std::time::Duration::from_secs(2))
