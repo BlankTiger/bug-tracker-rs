@@ -9,17 +9,29 @@ use actix_web::cookie::Key;
 use actix_web::dev::Server;
 use actix_web::{web, App, HttpServer};
 use actix_web_lab::middleware::from_fn;
-use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
+use openssl::ssl::{SslAcceptor, SslAcceptorBuilder, SslFiletype, SslMethod};
 use secrecy::{ExposeSecret, Secret};
 use sqlx::postgres::{PgConnectOptions, PgPoolOptions};
 use std::net::TcpListener;
 
-pub async fn server() -> std::result::Result<Server, anyhow::Error> {
-    const ACTIX_PORT: &str = std::env!("ACTIX_PORT");
-    let mut builder = SslAcceptor::mozilla_intermediate(SslMethod::tls()).unwrap();
+async fn ssl_builder() -> Result<SslAcceptorBuilder, anyhow::Error> {
+    let mut builder = SslAcceptor::mozilla_intermediate(SslMethod::tls())?;
     builder.set_private_key_file("key.pem", SslFiletype::PEM)?;
     builder.set_certificate_chain_file("cert.pem")?;
+    Ok(builder)
+}
 
+async fn listener(actix_port: u16) -> Result<TcpListener, anyhow::Error> {
+    let listener = TcpListener::bind(&format!("127.0.0.1:{}", actix_port))?;
+    Ok(listener)
+}
+
+/// TODO: Separate ssl and settings out of server
+pub async fn server() -> std::result::Result<Server, anyhow::Error> {
+    let actix_port: u16 = std::env!("ACTIX_PORT").parse::<u16>().unwrap_or(8080);
+
+    let listener = listener(actix_port).await?;
+    let ssl_builder = ssl_builder().await?;
     let redis_store = RedisSessionStore::new("redis://127.0.0.1:6379/").await?;
     let secret_key = Key::generate();
 
@@ -45,11 +57,6 @@ pub async fn server() -> std::result::Result<Server, anyhow::Error> {
 
     let db_pool = web::Data::new(db_pool);
 
-    let listener = TcpListener::bind(&format!(
-        "127.0.0.1:{}",
-        ACTIX_PORT.parse::<u16>().unwrap_or(8080)
-    ))?;
-
     let server = HttpServer::new(move || {
         App::new()
             .wrap(SessionMiddleware::new(
@@ -71,7 +78,7 @@ pub async fn server() -> std::result::Result<Server, anyhow::Error> {
         //.route("/register", web::get().to(register_form)))
         //.route("/register", web::post().to(register)))
     })
-    .listen_openssl(listener, builder)?
+    .listen_openssl(listener, ssl_builder)?
     .run();
     Ok(server)
 }
