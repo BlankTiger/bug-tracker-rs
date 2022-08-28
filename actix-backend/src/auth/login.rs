@@ -4,6 +4,7 @@ use crate::routes::error_chain::error_chain_fmt;
 use actix_web::error::InternalError;
 use actix_web::http::header::LOCATION;
 use secrecy::Secret;
+use crate::utils::extras::{e500, see_other};
 use actix_web::web;
 use actix_web::HttpResponse;
 use actix_web_flash_messages::FlashMessage;
@@ -60,6 +61,16 @@ pub enum LoginError {
     AuthError(#[source] anyhow::Error),
     #[error("Something went wrong")]
     UnexpectedError(#[from] anyhow::Error),
+}
+
+pub async fn logout(session: TypedSession) -> Result<HttpResponse, actix_web::Error> {
+    if session.get_user_id().map_err(e500)?.is_none() {
+        Ok(see_other("/login"))
+    } else {
+        session.log_out();
+        // FlashMessage::info("You have successfully logged out.").send();
+        Ok(see_other("/login"))
+    }
 }
 
 impl std::fmt::Debug for LoginError {

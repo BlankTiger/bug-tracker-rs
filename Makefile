@@ -5,13 +5,8 @@ test:
 serve-frontend:
 	cd yew-frontend && dotenv-rust -f .env trunk serve
 
-update-css-both:
-	/bin/sh -c "cp -rv yew-frontend/styles yew-frontend/dist/" & \
-	/bin/sh -c "cp -rv yew-frontend/styles actix-backend/ &" & \
-	wait;
-
 update-css:
-	cd yew-frontend && cargo watch -- make -C ../ update-css-both
+	cd yew-frontend && cargo watch -- cp -rv styles dist/
 
 serve-backend:
 	cd actix-backend && dotenv-rust -f .env cargo watch -x "run"
