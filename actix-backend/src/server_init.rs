@@ -14,14 +14,14 @@ use secrecy::{ExposeSecret, Secret};
 use sqlx::postgres::{PgConnectOptions, PgPoolOptions};
 use std::net::TcpListener;
 
-async fn ssl_builder() -> Result<SslAcceptorBuilder, anyhow::Error> {
+fn ssl_builder() -> Result<SslAcceptorBuilder, anyhow::Error> {
     let mut builder = SslAcceptor::mozilla_intermediate(SslMethod::tls())?;
     builder.set_private_key_file("key.pem", SslFiletype::PEM)?;
     builder.set_certificate_chain_file("cert.pem")?;
     Ok(builder)
 }
 
-async fn listener(actix_port: u16) -> Result<TcpListener, anyhow::Error> {
+fn listener(actix_port: u16) -> Result<TcpListener, anyhow::Error> {
     let listener = TcpListener::bind(&format!("127.0.0.1:{}", actix_port))?;
     Ok(listener)
 }
@@ -30,8 +30,8 @@ async fn listener(actix_port: u16) -> Result<TcpListener, anyhow::Error> {
 pub async fn server() -> std::result::Result<Server, anyhow::Error> {
     let actix_port: u16 = std::env!("ACTIX_PORT").parse::<u16>().unwrap_or(8080);
 
-    let listener = listener(actix_port).await?;
-    let ssl_builder = ssl_builder().await?;
+    let listener = listener(actix_port)?;
+    let ssl_builder = ssl_builder()?;
     let redis_store = RedisSessionStore::new("redis://127.0.0.1:6379/").await?;
     let secret_key = Key::generate();
 
