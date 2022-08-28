@@ -1,4 +1,5 @@
 use actix_web::{http::header::ContentType, HttpResponse};
+use actix_web::http::header::LOCATION;
 
 pub async fn login_form() -> HttpResponse {
     HttpResponse::Ok()
@@ -31,4 +32,10 @@ pub async fn login_form() -> HttpResponse {
 </body>
 </html>"#,
         ))
+}
+
+pub async fn redirect_to_login() -> HttpResponse {
+    HttpResponse::SeeOther()
+        .insert_header((LOCATION, "/login"))
+        .finish()
 }
