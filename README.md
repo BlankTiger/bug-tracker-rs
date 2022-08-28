@@ -22,6 +22,7 @@ make serve-backend
 		- [ ] create a pie chart of types and numbers of bugs
 		- [ ] create a table of issues
 		- [ ] create a table of projects
+		- [x] create tiles
 	- [ ] create a projects page
 	- [ ] create a issues page
 	- [ ] create a user settings page
