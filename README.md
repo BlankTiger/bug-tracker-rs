@@ -1,5 +1,5 @@
-# BugTracker.rs
-Fullstack web app written completely in rust. Yew for the frontend, actix for the backend.
+# bug-tracker-rs
+Fullstack web app written completely in rust. Yew for the frontend, actix for the backend. Utilises ssl, postgres, and redis. Implements session based authentication.
 
 # Using make to interact with the program
 You have to have dotenv-rust installed, then using a posix compliant shell, you can do:
@@ -27,4 +27,7 @@ make serve-backend
 	- [ ] create a user settings page
 
 - [ ] Actix backend
-	- [ ] login system
+	- [x] login system
+	- [x] ssl
+	- [ ] change password
+	- [ ] register an account
