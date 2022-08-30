@@ -2,9 +2,8 @@ use yew::prelude::*;
 use yew_router::prelude::*;
 mod components;
 mod pages;
-// use components::navbar::Navbar;
 use components::navbar::Navbar;
-use pages::dashboard::Dashboard;
+use pages::{dashboard, issues, notfound, projects, settings};
 
 #[derive(Routable, PartialEq, Eq, Clone)]
 pub enum Route {
@@ -23,29 +22,20 @@ pub enum Route {
 
 fn switch(routes: &Route) -> Html {
     match routes {
-        // TODO: Extract out into components
         Route::Home => html! {
-            <Dashboard />
+            <dashboard::Dashboard />
         },
         Route::Projects => html! {
-            <center>
-            <h1>{ "Projects" }</h1>
-            </center>
+            <projects::Projects />
         },
         Route::Issues => html! {
-            <center>
-            <h1>{ "Issues" }</h1>
-            </center>
+            <issues::Issues />
         },
         Route::Settings => html! {
-            <center>
-            <h1>{ "Settings" }</h1>
-            </center>
+            <settings::Settings />
         },
         Route::NotFound => html! {
-            <center>
-            <h1>{ "404" }</h1>
-            </center>
+            <notfound::NotFound />
         },
     }
 }
