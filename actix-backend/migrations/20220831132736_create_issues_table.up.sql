@@ -6,6 +6,6 @@ create table issues (
 	desc_long text,
 	status text not null,
 	assigned_to uuid[] not null,
-	created_by uuid not null references(user_id),
+	created_by uuid not null references users(user_id),
 	created_at timestamp not null default now()
 );
