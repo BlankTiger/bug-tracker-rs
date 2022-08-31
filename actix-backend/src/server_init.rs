@@ -40,7 +40,7 @@ pub async fn server() -> std::result::Result<Server, anyhow::Error> {
         port: 5432,
         username: "postgres".to_string(),
         password: Secret::from("postgres".to_string()),
-        database_name: "users".to_string(),
+        database_name: "bug_tracker".to_string(),
         require_ssl: true,
     };
 
