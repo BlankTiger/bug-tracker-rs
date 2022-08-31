@@ -115,3 +115,9 @@ a {
 .text-button:hover {
 	background: #333333;
 }
+
+.issues-fragment {
+	display: grid;
+	grid-template-columns: auto;
+	justify-content: center;
+}
