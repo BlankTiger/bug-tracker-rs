@@ -2,6 +2,7 @@ use crate::auth::manage::reject_not_authenticated;
 use crate::configurations::DatabaseSettings;
 use crate::routes::get::app::single_page_app;
 use crate::routes::get::login::{login_form, redirect_to_login};
+use crate::routes::get::projects::get_projects;
 use crate::routes::post::login::{login, logout};
 use actix_files::Files;
 use actix_session::{storage::RedisSessionStore, SessionMiddleware};
@@ -72,6 +73,11 @@ pub async fn server() -> std::result::Result<Server, anyhow::Error> {
                     .wrap(from_fn(reject_not_authenticated))
                     .route("/home", web::get().to(single_page_app))
                     .route("/logout", web::get().to(logout)),
+            )
+            .service(
+                web::scope("/api")
+                    .wrap(from_fn(reject_not_authenticated))
+                    .route("/projects/get_projects", web::get().to(get_projects)),
             )
             .service(Files::new("/", "../yew-frontend/dist"))
         // TODO: add register

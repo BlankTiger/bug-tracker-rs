@@ -25,5 +25,67 @@
       }
     },
     "query": "\n        select user_id, password_hash from users where username = $1\n        "
+  },
+  "1719af9583fc81c35bca74ac21ad0f4c7471ae2eff473a01b70f3ff03379803f": {
+    "describe": {
+      "columns": [
+        {
+          "name": "project_id",
+          "ordinal": 0,
+          "type_info": "Int4"
+        },
+        {
+          "name": "project_name",
+          "ordinal": 1,
+          "type_info": "Text"
+        },
+        {
+          "name": "desc_short",
+          "ordinal": 2,
+          "type_info": "Text"
+        },
+        {
+          "name": "desc_long",
+          "ordinal": 3,
+          "type_info": "Text"
+        },
+        {
+          "name": "status",
+          "ordinal": 4,
+          "type_info": "Text"
+        },
+        {
+          "name": "assigned_to",
+          "ordinal": 5,
+          "type_info": "UuidArray"
+        },
+        {
+          "name": "created_by",
+          "ordinal": 6,
+          "type_info": "Uuid"
+        },
+        {
+          "name": "created_at",
+          "ordinal": 7,
+          "type_info": "Timestamp"
+        }
+      ],
+      "nullable": [
+        false,
+        false,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false
+      ],
+      "parameters": {
+        "Left": [
+          "Uuid"
+        ]
+      }
+    },
+    "query": "select * from projects where $1=any(assigned_to)"
   }
 }
