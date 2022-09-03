@@ -3,7 +3,6 @@ use actix_web::error::InternalError;
 use actix_web::http::header::ContentType;
 use actix_web::http::header::LOCATION;
 use actix_web::{web, HttpResponse};
-use anyhow::Context;
 use serde::{Deserialize, Serialize};
 use sqlx::PgPool;
 use std::str;
@@ -46,7 +45,7 @@ pub async fn get_projects(
                     .finish())
             }
         },
-        Err(e) => {
+        Err(_) => {
             return Ok(HttpResponse::SeeOther()
                 .insert_header((LOCATION, "/login"))
                 .finish())
