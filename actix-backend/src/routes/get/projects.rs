@@ -3,34 +3,11 @@ use actix_web::error::InternalError;
 use actix_web::http::header::ContentType;
 use actix_web::http::header::LOCATION;
 use actix_web::{web, HttpResponse};
-use serde::{Deserialize, Serialize};
 use sqlx::PgPool;
-use std::str;
-use uuid::Uuid;
+use types::Project;
 
 use crate::auth::session_state::TypedSession;
 
-#[derive(Debug, Serialize, Deserialize)]
-enum ProjectStatus {
-    Active,
-    Canceled,
-    Pending,
-    Upcoming,
-    Overdue,
-    Priority,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-struct Project {
-    project_id: i32,
-    project_name: String,
-    desc_short: String,
-    desc_long: Option<String>,
-    status: String,
-    assigned_to: Vec<Uuid>,
-    created_by: Uuid,
-    created_at: chrono::NaiveDateTime,
-}
 
 pub async fn get_projects(
     pool: web::Data<PgPool>,
