@@ -1,20 +1,14 @@
+use gloo_console::log;
 use reqwasm::http::Request;
 use types::Project;
-// use wasm_cookies::get;
 use yew::prelude::*;
 use yew::use_state;
 
 async fn fetch_projects() -> Result<Vec<Project>, Box<dyn std::error::Error>> {
-    // let cookies = wasm_cookies::all().unwrap();
-    // console::log_1(&JsString::from(format!("{:?}", &cookies)));
-    // let session_id = cookies.get("id").unwrap();
+    let session_id = "Q2WyN6fwVyGPUkVaWNMLKxlfFZ74LakXveKVEmy8YziE1LEhzeJH06DNcsT4p5qFU0IWG7LAQ7DgDvDTA4AGGOiM0oLWBEuFtpwd0buOIHms5+hhTcXlBvJPI7Q%3D";
 
-    let session_id = "CM90Kp66HViJH0fz3R6mA55aBzGMa%2FtlIJRIyhv27CkiayObY5QfJES7mXEuVJl%2FUqmSdX5BYRGmhP4ay0m41japMGHIZ0ZHQzKdi00vhhrelIn4cpcSn3uJvR0%3D";
-
-    // let session_id = match get("id") {
-    //     Some(session_id) => session_id,
-    //     None => Err("No session id found")?,
-    // };
+    let cookies = wasm_cookies::all().unwrap();
+    log!("are empty? {}", cookies.is_empty());
 
     let projects = Request::get("https://127.0.0.1:8082/api/projects/get_projects")
         .header("cookie", &format!("id:{}", session_id) as &str)
@@ -29,33 +23,39 @@ async fn fetch_projects() -> Result<Vec<Project>, Box<dyn std::error::Error>> {
 fn projects_to_html_table(projects: Option<&Vec<Project>>) -> Html {
     let table_data = match projects {
         Some(projects) => html! {
-            { for projects.iter().map(|project| html! {
-                <tr>
-                    <td>{ &project.project_id }</td>
-                    <td>{ &project.project_name }</td>
-                    <td>{ &project.desc_short }</td>
-                    <td>{ &project.created_at }</td>
-                </tr>
-            }) }
+            <tbody>
+                { for projects.iter().map(|project| html! {
+                    <tr>
+                        <td>{ &project.project_id }</td>
+                        <td>{ &project.project_name }</td>
+                        <td>{ &project.desc_short }</td>
+                        <td>{ &project.created_at }</td>
+                    </tr>
+                }) }
+            </tbody>
         },
         None => html! {
-            <tr>
-                <td>{ "No projects found" }</td>
-                <td>{ "No projects found" }</td>
-                <td>{ "No projects found" }</td>
-                <td>{ "No projects found" }</td>
-            </tr>
+            <tbody>
+                <tr>
+                    <td>{ "No projects found" }</td>
+                    <td>{ "No projects found" }</td>
+                    <td>{ "No projects found" }</td>
+                    <td>{ "No projects found" }</td>
+                </tr>
+            </tbody>
         },
     };
 
     html! {
-        <table>
-            <tr>
-                <th>{ "Id" }</th>
-                <th>{ "Name" }</th>
-                <th>{ "Description" }</th>
-                <th>{ "Created at" }</th>
-            </tr>
+        <table class="projects-table">
+            <thead>
+                <tr>
+                    <th>{ "id" }</th>
+                    <th>{ "name" }</th>
+                    <th>{ "description" }</th>
+                    <th>{ "created at" }</th>
+                </tr>
+            </thead>
             { table_data }
         </table>
     }
@@ -73,8 +73,7 @@ pub fn projects() -> Html {
     let projects_table = projects_to_html_table(projects_clone.as_ref());
 
     html! {
-        <div>
-            <h1>{ "Projects" }</h1>
+        <div class="projects-fragment">
             { projects_table }
         </div>
     }

@@ -9,12 +9,9 @@ edition = "2021"
 yew = "0.19.3"
 types = { path = "../types" }
 yew-router = "0.16"
-gloo = "0.8.0"
-reqwest = { version = "0.11.11", features = ["rustls-tls", "json"] }
 wasm-cookies = "0.1.0"
 getrandom = { version = "0.2.7", features = ["js"] }
 tokio = "1.21.0"
 wasm-bindgen-futures = "0.4.32"
 reqwasm = "0.5.0"
-web-sys = { version = "0.3.59", features = ["console"] }
-js-sys = "0.3.59"
+gloo-console = "0.2.3"

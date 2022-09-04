@@ -121,3 +121,48 @@ a {
 	grid-template-columns: auto;
 	justify-content: center;
 }
+
+.projects-fragment {
+	display: flex;
+	justify-content: space-around;
+	align-items: start;
+}
+
+.projects-table {
+	width: 90%;
+	border-collapse: collapse;
+	margin: 3rem 0;
+	min-width: 400px;
+	border-radius: 10px 10px 0 0;
+	box-shadow: 0 0 30px rgba(0, 0, 0, 0.20);
+	overflow: hidden;
+}
+
+.projects-table thead tr {
+	background-color: #44449b;
+	color: #ffffff;
+	text-align: left;
+	font-weight: bold;
+}
+
+.projects-table td,
+.projects-table th {
+	padding: 1rem 1.2rem;
+}
+
+.projects-table tbody tr {
+	border-bottom: 1px solid #dddddd;
+}
+
+.projects-table tbody tr:nth-of-type(even) {
+	background-color: #f3f3f3;
+}
+
+.projects-table tbody tr:last-of-type {
+	border-bottom: 2px solid #44449b;
+}
+
+.content-table tbody tr.active-row {
+	font-weight: bold;
+	color: #44449b;
+}
