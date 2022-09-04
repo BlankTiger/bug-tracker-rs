@@ -72,6 +72,9 @@ pub async fn server() -> std::result::Result<Server, anyhow::Error> {
                 web::scope("/dashboard")
                     .wrap(from_fn(reject_not_authenticated))
                     .route("/home", web::get().to(single_page_app))
+                    .route("/projects", web::get().to(single_page_app))
+                    .route("/issues", web::get().to(single_page_app))
+                    .route("/settings", web::get().to(single_page_app))
                     .route("/logout", web::get().to(logout)),
             )
             .service(
